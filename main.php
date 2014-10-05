@@ -47,14 +47,12 @@
 
             var fetchPermsByEmployer = function(employerName) {
             	d3.json("/employer?name=" + employerName, function(error, json) {
-            		console.log(json);
             		var data = json.result;
             		data.sort(function(a, b) {
             			return d3.descending(
             				Date.parse(a.pD), 
             				Date.parse(b.pD));
             		});
-            		console.log(data);
             		showPermsByEmployerTable("#byEmployerTable", data);
             	});
             }
@@ -66,7 +64,7 @@
                     .append("thead")
                     .append("tr")
                     .selectAll("th")
-                    .data(["#", "ID", "Case Number", "Approval Date", "Priority Date", "Employer Name", "State", "Job Title"])
+                    .data(["#", "Case Number", "Approval Date", "Priority Date", "Employer Name", "State", "Job Title"])
                     .enter().append("th")
                     .text(function(d) {
                         return d;
@@ -78,10 +76,14 @@
                     .enter().append("tr")
                     .selectAll("td")
                     .data(function(d, i) {
-                        return [i + 1, d.id, d.cn, d.pD, d.cCD, d.fN, d.s, d.pT];
+                        return [i + 1, d.cn, d.pD, d.cCD, d.fN, d.s, d.pT];
                     })
                     .enter().append("td").append("span")
-                    .text(function(d) {
+                    .html(function(d, i) {
+                    	if (i === 1) {
+                    		return "<a href='http://icert.doleta.gov/index.cfm?event=ehLCJRExternal.dspCert&doc_id=3&visa_class_id=6&id=" 
+                    			+ data[i].id + "' target='_blank'>" + d + "</a>";
+                    	}
                         return d;
                     });
 
