@@ -9,5 +9,10 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+# Serve php scripts.
+- url: /employer
+  script: /php/employer.php
+
 - url: .*
   script: main.php
+
