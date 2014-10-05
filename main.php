@@ -15,7 +15,7 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-lg-6">
+						<div class="col-lg-12">
 							<div class="input-group">
 								<input id="employerNameTextBox" type="text" class="form-control" value="Akamai Technologies">
 								<span class="input-group-btn">
@@ -48,11 +48,18 @@
             var fetchPermsByEmployer = function(employerName) {
             	d3.json("/employer?name=" + employerName, function(error, json) {
             		console.log(json);
-            		showPermsByEmployerTable("#byEmployerTable", json);
+            		var data = json.result;
+            		data.sort(function(a, b) {
+            			return d3.descending(
+            				Date.parse(a.pD), 
+            				Date.parse(b.pD));
+            		});
+            		console.log(data);
+            		showPermsByEmployerTable("#byEmployerTable", data);
             	});
             }
 
-            var showPermsByEmployerTable = function(tableId, json) {
+            var showPermsByEmployerTable = function(tableId, data) {
             	var table = d3.select(tableId).html("");
 
             	table
@@ -67,7 +74,7 @@
 
                 table.append("tbody")
                     .selectAll("tr")
-                    .data(json.result)
+                    .data(data)
                     .enter().append("tr")
                     .selectAll("td")
                     .data(function(d, i) {
