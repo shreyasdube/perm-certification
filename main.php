@@ -33,7 +33,14 @@
 				</div>
 				<!-- Table -->
 				<table id="byEmployerTable" class="table"></table>
-                
+			</div>
+
+			<div style="text-align: center; font-size: small; color: #c0c0c0;">
+				<p>
+					Authored by <a href='https://www.linkedin.com/in/shreyasdube' target='_blank'>Shreyas Dube</a> | Made with <span class="glyphicon glyphicon-heart"></span> in Cambridge, MA
+					<br />
+					Data by <a href='http://dolstats.com/' target="_blank">dolstats.com</a>
+				</p>
 			</div>
 		</div>
         
