@@ -118,13 +118,13 @@
                     })
                     .selectAll("td")
                     .data(function(d, i) {
-                        return [i + 1, d.cn, d.pD, d.cCD, d.fN, d.s, d.pT, [d.pD, d.cCD]];
+                        return [i + 1, [d.id, d.cn], d.pD, d.cCD, d.fN, d.s, d.pT, [d.pD, d.cCD]];
                     })
                     .enter().append("td").append("span")
                     .html(function(d, i) {
                     	if (i === 1) {
                     		return "<a href='http://icert.doleta.gov/index.cfm?event=ehLCJRExternal.dspCert&doc_id=3&visa_class_id=6&id=" 
-                    			+ data[i].id + "' target='_blank'>" + d + "</a>";
+                    			+ d[0] + "' target='_blank'>" + d[1] + "</a>";
                     	}
 
                         if (i == 7) {
