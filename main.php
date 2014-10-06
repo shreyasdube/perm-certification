@@ -24,10 +24,16 @@
 							</div><!-- /input-group -->
 						</div><!-- /.col-lg-6 -->
 					</div><!-- /.row -->
+					<div class="row">
+						<div class="col-lg-12">
+							<br />
+							<div id="byEmployerLegend"></div>
+						</div>
+					</div>
 				</div>
 				<!-- Table -->
 				<table id="byEmployerTable" class="table"></table>
-                <div id="byEmployerLegend" class="panel-footer"></div>
+                
 			</div>
 		</div>
         
@@ -47,7 +53,7 @@
                 .range(colors);
 
             var drawLegend = function() {
-                var legend = d3.select("#byEmployerLegend").html("Legend: ");
+                var legend = d3.select("#byEmployerLegend").html("Legend (days): ");
 
                 legend.selectAll("span")
                     .data(colors)
