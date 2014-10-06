@@ -27,6 +27,7 @@
 				</div>
 				<!-- Table -->
 				<table id="byEmployerTable" class="table"></table>
+                <div id="byEmployerLegend" class="panel-footer"></div>
 			</div>
 		</div>
         
@@ -40,6 +41,30 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 		<script type="text/javascript">
+            var colors = ['#1a9641', '#a6d96a', '#ffffbf', '#fdae61', '#d7191c'];
+            var scale = d3.scale.threshold()
+                .domain([60, 90, 150, 360])
+                .range(colors);
+
+            var drawLegend = function() {
+                var legend = d3.select("#byEmployerLegend").html("Legend: ");
+
+                legend.selectAll("span")
+                    .data(colors)
+                    .enter().append("span")
+                    .attr("class", "label label-default")
+                    .text(function(d) {
+                        return scale.invertExtent(d);
+                    })
+                    .style("margin-right", "5px")
+                    .style("background-color", function(d) {
+                        return d;
+                    })
+                    .style("color", "black");
+            }
+
+            drawLegend();
+
 			d3.select("#byEmployerButton").on("click", function(d) {
                 var employerName = $("#employerNameTextBox").val();
                 fetchPermsByEmployer(employerName);
@@ -59,11 +84,7 @@
 
             var showPermsByEmployerTable = function(tableId, data) {
             	var table = d3.select(tableId).html("");
-                var colors = ['#1a9641', '#a6d96a', '#ffffbf', '#fdae61', '#d7191c'];
-                var scale = d3.scale.threshold()
-                    .domain([60, 90, 150, 360])
-                    .range(colors);
-
+                
             	table
                     .append("thead")
                     .append("tr")
