@@ -59,12 +59,16 @@
 
             var showPermsByEmployerTable = function(tableId, data) {
             	var table = d3.select(tableId).html("");
+                var colors = ['#1a9641', '#a6d96a', '#ffffbf', '#fdae61', '#d7191c'];
+                var scale = d3.scale.threshold()
+                    .domain([60, 90, 150, 360])
+                    .range(colors);
 
             	table
                     .append("thead")
                     .append("tr")
                     .selectAll("th")
-                    .data(["#", "Case Number", "Approval Date", "Priority Date", "Employer Name", "State", "Job Title"])
+                    .data(["#", "Case Number", "Approval Date", "Priority Date", "Employer Name", "State", "Job Title", "Days"])
                     .enter().append("th")
                     .text(function(d) {
                         return d;
@@ -74,9 +78,13 @@
                     .selectAll("tr")
                     .data(data)
                     .enter().append("tr")
+                    .style("background-color", function(d, i) {
+                        var days = diffDates(d.pD, d.cCD);
+                        return scale(days);
+                    })
                     .selectAll("td")
                     .data(function(d, i) {
-                        return [i + 1, d.cn, d.pD, d.cCD, d.fN, d.s, d.pT];
+                        return [i + 1, d.cn, d.pD, d.cCD, d.fN, d.s, d.pT, [d.pD, d.cCD]];
                     })
                     .enter().append("td").append("span")
                     .html(function(d, i) {
@@ -84,9 +92,23 @@
                     		return "<a href='http://icert.doleta.gov/index.cfm?event=ehLCJRExternal.dspCert&doc_id=3&visa_class_id=6&id=" 
                     			+ data[i].id + "' target='_blank'>" + d + "</a>";
                     	}
+
+                        if (i == 7) {
+                            return diffDates(d[0], d[1]);
+                        }
                         return d;
                     });
 
+            }
+
+            var secondsToDays = function(seconds) {
+                return Math.round(seconds / (1000 * 60 * 60 * 24));
+            }
+
+            var diffDates = function(date1, date2) {
+                return secondsToDays(
+                        Date.parse(date1) - Date.parse(date2)
+                    );
             }
 		</script>
     </body>
