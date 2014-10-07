@@ -105,7 +105,7 @@
                     .append("thead")
                     .append("tr")
                     .selectAll("th")
-                    .data(["#", "Case Number", "Approval Date", "Priority Date", "Employer Name", "State", "Job Title", "Days"])
+                    .data(["#", "Case Number", "Approval Date", "Priority Date", "Employer Name", "State", "Job Title", "Days", "Case Status"])
                     .enter().append("th")
                     .text(function(d) {
                         return d;
@@ -125,7 +125,7 @@
                     })
                     .selectAll("td")
                     .data(function(d, i) {
-                        return [i + 1, [d.id, d.cn], d.pD, d.cCD, d.fN, d.s, d.pT, [d.pD, d.cCD]];
+                        return [i + 1, [d.id, d.cn], d.pD, d.cCD, d.fN, d.s, d.pT, [d.pD, d.cCD], d.cR];
                     })
                     .enter().append("td").append("span")
                     .html(function(d, i) {
