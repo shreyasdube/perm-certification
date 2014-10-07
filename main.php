@@ -81,6 +81,13 @@
 
             drawLegend();
 
+			$("#employerNameTextBox").keyup(function(e) {
+                // enter key
+                if (e.keyCode === 13) {
+                    var employerName = $("#employerNameTextBox").val();
+                	fetchPermsByEmployer(employerName);
+                }
+            });
 			d3.select("#byEmployerButton").on("click", function(d) {
                 var employerName = $("#employerNameTextBox").val();
                 fetchPermsByEmployer(employerName);
