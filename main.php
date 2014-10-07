@@ -55,6 +55,7 @@
 
 		<script type="text/javascript">
             var colors = ['#1a9641', '#a6d96a', '#ffffbf', '#fdae61', '#d7191c'];
+            var matchingFontColors = ['white', 'black', 'black', 'black', 'white'];
             var scale = d3.scale.threshold()
                 .domain([60, 90, 150, 360])
                 .range(colors);
@@ -70,10 +71,12 @@
                         return scale.invertExtent(d);
                     })
                     .style("margin-right", "5px")
-                    .style("background-color", function(d) {
+                    .style("background-color", function(d, i) {
                         return d;
                     })
-                    .style("color", "black");
+                    .style("color", function(d, i) {
+                    	return matchingFontColors[i];
+                    });
             }
 
             drawLegend();
@@ -115,6 +118,10 @@
                     .style("background-color", function(d, i) {
                         var days = diffDates(d.pD, d.cCD);
                         return scale(days);
+                    })
+                    .style("color", function(d, i) {
+                		var days = diffDates(d.pD, d.cCD);
+                    	return matchingFontColors[colors.indexOf(scale(days))]; 
                     })
                     .selectAll("td")
                     .data(function(d, i) {
